@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddRecord" />
-        <activity android:name=".ViewRecords"></activity>
+        <activity android:name=".ViewRecords" />
     </application>
 
 </manifest>

@@ -40,6 +40,7 @@
         android:layout_width="231dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
+        android:onClick="onViewRecordsButtonClicked"
         android:text="View Records"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="24sp"
@@ -47,4 +48,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addRecordButton" />
+
 </android.support.constraint.ConstraintLayout>
