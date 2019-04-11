@@ -58,7 +58,7 @@
                     android:id="@+id/TransactionCostText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TransactionCost"
+                    android:text="Transaction Cost"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <EditText
@@ -74,7 +74,7 @@
                     android:id="@+id/TransactionDescriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TransactionDescription"
+                    android:text="Transaction Description"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <EditText
@@ -85,6 +85,26 @@
                     android:inputType="textMultiLine"
                     android:text="'Open Pringles, I'l have a munch. Change your locks thrice a month."
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/transactionDescriptionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Transaction Receipt"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <ImageButton
+                    android:id="@+id/btnCamera"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="obBtnCameraClicked"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit" />
 
             </LinearLayout>
         </ScrollView>
