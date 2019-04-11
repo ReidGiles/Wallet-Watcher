@@ -100,6 +100,12 @@
                     android:onClick="obBtnCameraClicked"
                     app:srcCompat="@android:drawable/ic_menu_camera" />
 
+                <ImageView
+                    android:id="@+id/imgCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/screen_background_light_transparent" />
+
                 <Button
                     android:id="@+id/btnSubmit"
                     android:layout_width="match_parent"
