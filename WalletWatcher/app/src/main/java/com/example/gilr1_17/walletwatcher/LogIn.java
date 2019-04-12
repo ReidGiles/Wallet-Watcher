@@ -1,12 +1,9 @@
 package com.example.gilr1_17.walletwatcher;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,27 +12,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class LogIn extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "LogIn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        this.findViewById(R.id.sign_in_button).setOnClickListener(this);
+        setContentView(R.layout.activity_log_in);
 
         mAuth = FirebaseAuth.getInstance();
-    }
-
-    public void onClick(View view)
-    {
-        if (view.getId() == R.id.sign_in_button)
-        {
-            onSignInButtonClicked();
-        }
     }
 
     @Override
@@ -72,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(LogIn.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -82,17 +69,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    public void onAddRecordButtonClicked(View button)
+    private void signIn(String email, String password)
     {
-        startActivity(new Intent(MainActivity.this, AddRecord.class));
-    }
-    public void onViewRecordsButtonClicked(View button)
-    {
-        startActivity(new Intent(MainActivity.this, ViewRecords.class));
-    }
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LogIn.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
 
-    public void onSignInButtonClicked()
-    {
-        startActivity(new Intent(MainActivity.this, LogIn.class));
+                        // ...
+                    }
+                });
     }
 }

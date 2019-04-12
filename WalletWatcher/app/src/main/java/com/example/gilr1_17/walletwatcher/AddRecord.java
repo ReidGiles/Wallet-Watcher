@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class AddRecord extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;

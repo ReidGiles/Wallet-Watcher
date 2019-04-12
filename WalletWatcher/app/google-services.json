@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "472572666998",
+    "firebase_url": "https://walletwatcher-7c38a.firebaseio.com",
+    "project_id": "walletwatcher-7c38a",
+    "storage_bucket": "walletwatcher-7c38a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472572666998:android:3f09114e84460c68",
+        "android_client_info": {
+          "package_name": "com.example.gilr1_17.walletwatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472572666998-v2vdm9c3stscmkrk5gomagbaaddp8e48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gilr1_17.walletwatcher",
+            "certificate_hash": "5ecb3f994d34bd4b9e2cf768ab8c099df08bfbc6"
+          }
+        },
+        {
+          "client_id": "472572666998-kq1h345dtgnnbe4bd7q19pujgsonppki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6OJPN21YtVDF-Sp4iMKCl2TmrTVySR-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472572666998-kq1h345dtgnnbe4bd7q19pujgsonppki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
