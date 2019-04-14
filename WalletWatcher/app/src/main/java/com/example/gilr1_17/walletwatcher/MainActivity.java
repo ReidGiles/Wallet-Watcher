@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,54 +35,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view)
     {
-        if (view.getId() == R.id.sign_in_button)
-        {
-            onSignInButtonClicked();
-        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);;
+        updateUI(account);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(GoogleSignInAccount account) {
         // https://stackoverflow.com/questions/44491418/can-not-resolve-updateui-firebase
 
-        if (user != null)
+        if (account != null)
         {
+            Toast.makeText(getApplicationContext(),"Signed in",Toast.LENGTH_SHORT).show();
+            TextView name = this.findViewById(R.id.txtName);
+            name.setText(account.getDisplayName());
         }
         else
         {
-            // Open log in activity
+            //startActivity(new Intent(MainActivity.this, LogIn.class));
+            Toast toast=Toast.makeText(getApplicationContext(),"Viewing records unavailable offline",Toast.LENGTH_LONG);
+            toast.show();
         }
-    }
-
-    private void createAccount(String email, String password)
-    {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
     }
 
     public void onAddRecordButtonClicked(View button)

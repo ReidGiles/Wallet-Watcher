@@ -1,26 +1,20 @@
 package com.example.gilr1_17.walletwatcher;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class LogIn extends AppCompatActivity implements View.OnClickListener {
+public class GoogleLogIn extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
@@ -52,10 +46,6 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         {
             onSignInButtonClicked();
         }
-        if (view.getId() == R.id.btnContinueOffline)
-        {
-            startActivity(new Intent(LogIn.this, MainActivity.class));
-        }
     }
 
     @Override
@@ -75,15 +65,73 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
         if (account != null)
         {
-            startActivity(new Intent(LogIn.this, MainActivity.class));
         }
         else
         {
+            // Open log in activity
         }
+    }
+
+    private void createAccount(String email, String password)
+    {
+        /*mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(LogIn.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                        // ...
+                    }
+                });*/
+    }
+
+    private void signIn(String email, String password)
+    {
+        /*mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LogIn.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                        // ...
+                    }
+                });*/
     }
 
     public void onSignInButtonClicked()
     {
+        /*EditText email = this.findViewById(R.id.editTxtEmail);
+        EditText password = this.findViewById(R.id.editTxtPassword);
+        if (email.getText().toString().matches("") && password.getText().toString().matches(""))
+        {
+            Toast.makeText(LogIn.this, "Login fields must not be blank.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            signIn(email.getText().toString(), password.getText().toString());
+        }*/
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }

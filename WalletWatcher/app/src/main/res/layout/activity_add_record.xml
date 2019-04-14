@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/blue_gradient"
     tools:context=".AddRecord">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="51dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -27,71 +31,80 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Transaction Name"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <EditText
                     android:id="@+id/TransactionNameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:hint="'Pringles'"
                     android:inputType="textPersonName"
-                    android:text="'Pringles'"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/TransactionCategoryText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Transaction Name"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <EditText
                     android:id="@+id/TransactionCategoryInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:hint="'Food'"
                     android:inputType="textPersonName"
-                    android:text="'Food'"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/TransactionCostText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Transaction Cost"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <EditText
                     android:id="@+id/TransactionCostInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:hint="'£1.50'"
                     android:inputType="textPersonName"
-                    android:text="'£1.50'"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/TransactionDescriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Transaction Description"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <EditText
                     android:id="@+id/TransactionDescriptionInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:hint="'Open Pringles, I'l have a munch. Change your locks thrice a month."
                     android:inputType="textMultiLine"
-                    android:text="'Open Pringles, I'l have a munch. Change your locks thrice a month."
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/transactionDescriptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Transaction Receipt"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white" />
 
                 <ImageButton
                     android:id="@+id/btnCamera"
@@ -110,7 +123,8 @@
                     android:id="@+id/btnSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit" />
+                    android:text="Submit"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
         </ScrollView>
