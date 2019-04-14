@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,15 +26,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
+    private ImageView avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.findViewById(R.id.sign_in_button).setOnClickListener(this);
-
         mAuth = FirebaseAuth.getInstance();
+        avatar = findViewById(R.id.imgAvatar);
+
+        Toolbar toolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolBar);
     }
 
     public void onClick(View view)
@@ -52,7 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             Toast.makeText(getApplicationContext(),"Signed in",Toast.LENGTH_SHORT).show();
             TextView name = this.findViewById(R.id.txtName);
-            name.setText(account.getDisplayName());
+            name.setText(account.getGivenName());
+            String photo = account.getPhotoUrl().toString();
+
+            Glide.with(getApplicationContext()).load(photo).into(avatar);
         }
         else
         {
