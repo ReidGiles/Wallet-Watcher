@@ -19,10 +19,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
+    FirebaseFirestore db;
     GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "LogIn";
     private static final int RC_SIGN_IN = 2;
@@ -34,7 +38,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
 
         this.findViewById(R.id.sign_in_button).setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -91,6 +95,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Create a new user with a first, middle, and last name
+            Map<String, Object> user = new HashMap<>();
+            user.put("first", account.getGivenName());
+            user.put("last", account.getFamilyName());
+            user.put("email", account.getEmail());
+
+            db.collection("users").add(user);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);

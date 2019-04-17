@@ -48,7 +48,7 @@
                     android:id="@+id/TransactionCategoryText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Transaction Name"
+                    android:text="Transaction Category"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white" />
 
@@ -123,11 +123,13 @@
                     android:id="@+id/btnSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit"
-                    android:textColor="@android:color/white" />
+                    android:background="@android:color/white"
+                    android:onClick="onBtnSubmitClicked"
+                    android:text="Submit" />
 
             </LinearLayout>
         </ScrollView>
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

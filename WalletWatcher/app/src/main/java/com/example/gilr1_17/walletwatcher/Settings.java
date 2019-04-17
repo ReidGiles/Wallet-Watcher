@@ -15,12 +15,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 2;
     private static final String TAG = "Settiings";
 
+    FirebaseFirestore db;
     GoogleSignInClient mGoogleSignInClient;
     Button _accountName;
     Button _logInOut;
@@ -34,6 +39,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         _logInOut = findViewById(R.id.btnLogInOut);
 
         this.findViewById(R.id.btnLogInOut).setOnClickListener(this);
+
+        db = FirebaseFirestore.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -99,6 +106,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Create a new user with a first, middle, and last name
+            Map<String, Object> user = new HashMap<>();
+            user.put("first", account.getGivenName());
+            user.put("last", account.getFamilyName());
+            user.put("email", account.getEmail());
+
+            db.collection("users").document(account.getId()).set(user);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
