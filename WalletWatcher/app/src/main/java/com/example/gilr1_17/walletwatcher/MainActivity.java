@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
     private ImageView avatar;
+    private TextView name;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAuth = FirebaseAuth.getInstance();
         avatar = findViewById(R.id.imgAvatar);
+        name = this.findViewById(R.id.txtName);
+        title = this.findViewById(R.id.txtWelcomeBack);
 
         Toolbar toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // Open settings activity
-                startActivity(new Intent(MainActivity.this, LogIn.class));
+                startActivity(new Intent(MainActivity.this, Settings.class));
 
                 return true;
             default:
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
@@ -83,17 +87,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (account != null)
         {
             Toast.makeText(getApplicationContext(),"Signed in",Toast.LENGTH_SHORT).show();
-            TextView name = this.findViewById(R.id.txtName);
+            title.setText("Welcome back,");
             name.setText(account.getGivenName());
-            String photo = account.getPhotoUrl().toString();
-
-            Glide.with(getApplicationContext()).load(photo).into(avatar);
+            if (account.getPhotoUrl() != null)
+            {
+                String photo = account.getPhotoUrl().toString();
+                Glide.with(getApplicationContext()).load(photo).into(avatar);
+            }
+            else
+            {
+                String photo = "sample/avatars[11]";
+                Glide.with(getApplicationContext()).load(photo).into(avatar);
+            }
         }
         else
         {
             //startActivity(new Intent(MainActivity.this, LogIn.class));
             Toast toast=Toast.makeText(getApplicationContext(),"Viewing records unavailable offline",Toast.LENGTH_LONG);
             toast.show();
+            title.setText("Offline mode");
+            name.setText("");
+            String photo = "sample/avatars[11]";
+            Glide.with(getApplicationContext()).load(photo).into(avatar);
         }
     }
 
@@ -104,10 +119,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onViewRecordsButtonClicked(View button)
     {
         startActivity(new Intent(MainActivity.this, ViewRecords.class));
-    }
-
-    public void onSignInButtonClicked()
-    {
-        startActivity(new Intent(MainActivity.this, LogIn.class));
     }
 }
