@@ -80,6 +80,7 @@ public class ViewRecords extends AppCompatActivity {
                                             100));
                                     relativeLayout.addView(cardView);
 
+                                    // https://stackoverflow.com/questions/44223471/setting-margin-programmatically-to-cardview
                                     ViewGroup.MarginLayoutParams cardViewParams = (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
                                     cardViewParams.setMargins(30, margin, 30, 30);
                                     cardView.requestLayout();
