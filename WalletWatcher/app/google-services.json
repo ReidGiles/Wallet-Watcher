@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "472572666998-v2vdm9c3stscmkrk5gomagbaaddp8e48.apps.googleusercontent.com",
+          "client_id": "472572666998-f0ptb907b13ifffe3g8to2v819aju96j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.gilr1_17.walletwatcher",
-            "certificate_hash": "5ecb3f994d34bd4b9e2cf768ab8c099df08bfbc6"
+            "certificate_hash": "951d64a9c29db4a05c3da35fb404f92fd5743d9a"
+          }
+        },
+        {
+          "client_id": "472572666998-91ujenn00h5mosbtpffbmb2f04not073.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gilr1_17.walletwatcher",
+            "certificate_hash": "e3e03e05d4fd213dac15b6d3f4fadfcf25c7cb7c"
           }
         },
         {

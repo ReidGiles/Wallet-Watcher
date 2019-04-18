@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
     private ImageView avatar;
     private TextView name;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
         avatar = findViewById(R.id.imgAvatar);
         name = this.findViewById(R.id.txtName);
         title = this.findViewById(R.id.txtWelcomeBack);
