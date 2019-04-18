@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -28,14 +30,11 @@ public class ViewRecords extends AppCompatActivity {
 
     FirebaseFirestore db;
     GoogleSignInClient mGoogleSignInClient;
-    private TextView _rtnText1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_records);
-
-        _rtnText1 = findViewById(R.id.rtnText1);
 
         db = FirebaseFirestore.getInstance();
 
@@ -66,18 +65,25 @@ public class ViewRecords extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
+                                int margin = 200;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    //Log.d(TAG, document.getId() + " => " + document.getData());
 
-                                    _rtnText1.append(document.getData().toString() + "\n\n");
+                                    //_rtnText1.append(document.getData().toString() + "\n\n");
 
-                                    /*CardView cardView = findViewById(R.id.card_view);
-                                    TextView textView = new TextView(ViewRecords.this);
-                                    textView.setText("Hello darkness my old friend");
-                                    textView.setLayoutParams(new CardView.LayoutParams(
+                                    //Log.d(TAG,"String value: " + document.getString("name"));
+
+                                    RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
+                                    CardView cardView = new CardView(ViewRecords.this);
+                                    cardView.setLayoutParams(new CardView.LayoutParams(
                                             CardView.LayoutParams.MATCH_PARENT,
-                                            20));
-                                    cardView.addView(textView);*/
+                                            100));
+                                    relativeLayout.addView(cardView);
+
+                                    ViewGroup.MarginLayoutParams cardViewParams = (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
+                                    cardViewParams.setMargins(30, margin, 30, 30);
+                                    cardView.requestLayout();
+                                    margin += 150;
                                 }
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
