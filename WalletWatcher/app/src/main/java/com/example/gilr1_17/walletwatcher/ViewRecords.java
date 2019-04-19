@@ -65,7 +65,8 @@ public class ViewRecords extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                int margin = 200;
+                                int cardMargin = 200;
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     //Log.d(TAG, document.getId() + " => " + document.getData());
 
@@ -77,14 +78,38 @@ public class ViewRecords extends AppCompatActivity {
                                     CardView cardView = new CardView(ViewRecords.this);
                                     cardView.setLayoutParams(new CardView.LayoutParams(
                                             CardView.LayoutParams.MATCH_PARENT,
-                                            100));
-                                    relativeLayout.addView(cardView);
+                                            400));
 
                                     // https://stackoverflow.com/questions/44223471/setting-margin-programmatically-to-cardview
                                     ViewGroup.MarginLayoutParams cardViewParams = (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
-                                    cardViewParams.setMargins(30, margin, 30, 30);
-                                    cardView.requestLayout();
-                                    margin += 150;
+                                    cardViewParams.setMargins(30, cardMargin, 30, 30);
+
+                                    relativeLayout.addView(cardView);
+
+                                    TextView name = new TextView(ViewRecords.this);
+                                    name.setText("Name: " + document.getString("name"));
+                                    //name.setLayoutParams(params);
+                                    cardView.addView(name);
+
+                                    TextView category = new TextView(ViewRecords.this);
+                                    category.setText("Category: " + document.getString("category"));
+                                    params.setMargins(0,50,0,0);
+                                    category.setLayoutParams(params);
+                                    cardView.addView(category);
+
+                                    TextView cost = new TextView(ViewRecords.this);
+                                    cost.setText("Cost: " + document.getString("cost"));
+                                    params.setMargins(0,100,0,0);
+                                    cost.setLayoutParams(params);
+                                    cardView.addView(cost);
+
+                                    TextView description = new TextView(ViewRecords.this);
+                                    description.setText("Description: " + document.getString("description"));
+                                    params.setMargins(0,150,0,0);
+                                    description.setLayoutParams(params);
+                                    cardView.addView(description);
+
+                                    cardMargin += 450;
                                 }
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
