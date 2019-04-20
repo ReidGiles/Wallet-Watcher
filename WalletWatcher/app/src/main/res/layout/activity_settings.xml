@@ -8,7 +8,7 @@
     tools:context=".Settings">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayoutToolbar"
         android:layout_width="0dp"
         android:layout_height="52dp"
         app:layout_constraintEnd_toEndOf="parent"
