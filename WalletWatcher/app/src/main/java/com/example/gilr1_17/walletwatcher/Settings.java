@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -47,6 +50,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        Toolbar toolBar = findViewById(R.id.toolbar);
+        toolBar.setTitle("Settings");
+        setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -77,6 +86,35 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         if (view.getId() == R.id.btnLogInOut)
         {
             onLogInOutButtonClicked();
+        }
+    }
+    //https://stackoverflow.com/questions/26651602/display-back-arrow-on-toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    // https://stackoverflow.com/questions/35648913/how-to-set-menu-to-toolbar-in-android
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // Open settings activity
+                startActivity(new Intent(Settings.this, Settings.class));
+
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
         }
     }
 
