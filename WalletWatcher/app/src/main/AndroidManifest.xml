@@ -30,6 +30,7 @@
         <activity android:name=".ViewRecords" />
         <activity android:name=".GoogleLogIn" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".ViewImage"></activity>
     </application>
 
 </manifest>

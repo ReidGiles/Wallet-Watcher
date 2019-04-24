@@ -1,5 +1,6 @@
 package com.example.gilr1_17.walletwatcher;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -52,6 +53,7 @@ public class ViewRecords extends AppCompatActivity {
     RelativeLayout relativeLayout;
     List<QueryDocumentSnapshot> activeDocuments;
     List<CardView> activeCards;
+    List<Bitmap> activeImages;
     int id;
     ImageView imageView;
 
@@ -67,6 +69,7 @@ public class ViewRecords extends AppCompatActivity {
         relativeLayout = findViewById(R.id.relativeLayout);
         activeDocuments = new ArrayList<QueryDocumentSnapshot>();
         activeCards = new ArrayList<CardView>();
+        activeImages = new ArrayList<Bitmap>();
         id = 0;
         imageView = new ImageView(ViewRecords.this);
 
@@ -83,7 +86,8 @@ public class ViewRecords extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    View.OnClickListener cardButtons = new View.OnClickListener() {
+    View.OnClickListener deleteButtons = new View.OnClickListener()
+    {
         @Override
         public void onClick(View view) {
             for (CardView cardView : activeCards)
@@ -100,6 +104,18 @@ public class ViewRecords extends AppCompatActivity {
                     }
                     updateUI();
                 }
+            }
+        }
+    };
+
+    View.OnClickListener expandButtons = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            for (Bitmap b : activeImages)
+            {
+
             }
         }
     };
@@ -122,7 +138,7 @@ public class ViewRecords extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        startActivity(new Intent(ViewRecords.this, MainActivity.class));
         return true;
     }
 
@@ -212,20 +228,28 @@ public class ViewRecords extends AppCompatActivity {
                                 delete.setImageResource(R.drawable.baseline_delete_forever_black_18dp);
                                 params.setMargins(850,0,0,0);
                                 delete.setLayoutParams(params);
-                                delete.setOnClickListener(cardButtons);
+                                delete.setOnClickListener(deleteButtons);
                                 cardView.addView(delete);
 
                                 if (document.getString("receipt") != null)
                                 {
                                     displayImage(cardView, document);
+
+                                    ImageButton viewReceipt = new ImageButton(ViewRecords.this);
+                                    viewReceipt.setImageResource(R.drawable.baseline_open_in_new_black_18dp);
+                                    params.setMargins(850,150,0,0);
+                                    viewReceipt.setLayoutParams(params);
+                                    viewReceipt.setOnClickListener(expandButtons);
+                                    cardView.addView(viewReceipt);
                                 }
 
                                 for (QueryDocumentSnapshot d : activeDocuments)
-                                    if (d == document)
-                                    {
+                                {
+                                    if (d == document) {
                                         duplicate = true;
-                                        delete.setId( (activeDocuments.indexOf(d)) + 1 );
+                                        delete.setId((activeDocuments.indexOf(d)) + 1);
                                     }
+                                }
                                 if (!duplicate)
                                 {
                                     activeDocuments.add(document);
@@ -256,6 +280,7 @@ public class ViewRecords extends AppCompatActivity {
                 //https://stackoverflow.com/questions/3545493/display-byte-to-imageview-in-android#
                 //---------------------------------------------------------------------------------
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                activeImages.add(bitmap);
                 imageView.setImageBitmap(bitmap);
                 //---------------------------------------------------------------------------------
                 cardView.addView(imageView);
