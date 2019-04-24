@@ -1,5 +1,7 @@
 package com.example.gilr1_17.walletwatcher;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -39,23 +44,30 @@ public class ViewRecords extends AppCompatActivity {
     private static final String TAG = "ViewRecords";
 
     FirebaseFirestore db;
+    FirebaseStorage storage;
+    StorageReference storageRef;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
     RelativeLayout relativeLayout;
     List<QueryDocumentSnapshot> activeDocuments;
     List<CardView> activeCards;
     int id;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_records);
 
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
         db = FirebaseFirestore.getInstance();
         relativeLayout = findViewById(R.id.relativeLayout);
         activeDocuments = new ArrayList<QueryDocumentSnapshot>();
         activeCards = new ArrayList<CardView>();
         id = 0;
+        imageView = new ImageView(ViewRecords.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -202,6 +214,11 @@ public class ViewRecords extends AppCompatActivity {
                                 delete.setOnClickListener(cardButtons);
                                 cardView.addView(delete);
 
+                                if (document.getString("receipt") != null)
+                                {
+                                    displayImage(cardView, document);
+                                }
+
                                 for (QueryDocumentSnapshot d : activeDocuments)
                                     if (d == document)
                                     {
@@ -222,5 +239,32 @@ public class ViewRecords extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void displayImage(final CardView cardView, QueryDocumentSnapshot document)
+    {
+        StorageReference receiptRef = storage.getReferenceFromUrl(document.getString("receipt"));
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        receiptRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Data for "images/island.jpg" is returns, use this as needed
+                Log.d(TAG, "Image success");
+                imageView = new ImageView(ViewRecords.this);
+                //https://stackoverflow.com/questions/3545493/display-byte-to-imageview-in-android#
+                //---------------------------------------------------------------------------------
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imageView.setImageBitmap(bitmap);
+                //---------------------------------------------------------------------------------
+                cardView.addView(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.d(TAG, "Image failure");
+            }
+        });
     }
 }
