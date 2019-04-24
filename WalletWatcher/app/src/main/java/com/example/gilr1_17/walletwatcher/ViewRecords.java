@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -207,9 +208,9 @@ public class ViewRecords extends AppCompatActivity {
                                 description.setLayoutParams(params);
                                 cardView.addView(description);
 
-                                Button delete = new Button(ViewRecords.this);
-                                delete.setText("Delete");
-                                params.setMargins(700,0,0,0);
+                                ImageButton delete = new ImageButton(ViewRecords.this);
+                                delete.setImageResource(R.drawable.baseline_delete_forever_black_18dp);
+                                params.setMargins(850,0,0,0);
                                 delete.setLayoutParams(params);
                                 delete.setOnClickListener(cardButtons);
                                 cardView.addView(delete);
