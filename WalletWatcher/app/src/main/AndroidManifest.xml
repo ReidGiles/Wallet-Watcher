@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddRecord" />
+        <activity android:name=".AddRecord"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".ViewRecords" />
         <activity android:name=".GoogleLogIn" />
         <activity android:name=".MainActivity" />

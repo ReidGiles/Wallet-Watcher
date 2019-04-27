@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI(account);
     }
 
+    /**
+     * Updates UI based on account status
+     * @param account current google sign in account
+     */
     private void updateUI(GoogleSignInAccount account) {
         // https://stackoverflow.com/questions/44491418/can-not-resolve-updateui-firebase
 
@@ -110,10 +114,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Opens the AddRecord activity
+     * @param button
+     */
     public void onAddRecordButtonClicked(View button)
     {
         startActivity(new Intent(MainActivity.this, AddRecord.class));
     }
+
+    /**
+     * Opens the ViewRecords activity
+     * @param button
+     */
     public void onViewRecordsButtonClicked(View button)
     {
         startActivity(new Intent(MainActivity.this, ViewRecords.class));

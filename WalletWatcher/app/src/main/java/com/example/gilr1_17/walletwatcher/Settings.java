@@ -66,6 +66,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         updateUI(account);
     }
 
+    /**
+     * Updates UI based on current account
+     * @param account current signed in account
+     */
     private void updateUI(GoogleSignInAccount account) {
         // https://stackoverflow.com/questions/44491418/can-not-resolve-updateui-firebase
 

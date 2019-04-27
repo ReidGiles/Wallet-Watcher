@@ -37,6 +37,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_log_in);
 
         this.findViewById(R.id.sign_in_button).setOnClickListener(this);
+        this.findViewById(R.id.btnContinueOffline).setOnClickListener(this);
 
         db = FirebaseFirestore.getInstance();
 
@@ -74,9 +75,14 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         updateUI(account);
     }
 
+    /**
+     * Updates UI based on account status
+     * @param account current google sign in account
+     */
     private void updateUI(GoogleSignInAccount account) {
         // https://stackoverflow.com/questions/44491418/can-not-resolve-updateui-firebase
 
+        // If user is logged in, proceed to main activity
         if (account != null)
         {
             startActivity(new Intent(LogIn.this, MainActivity.class));
@@ -86,12 +92,19 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Opens a google sign in client
+     */
     public void onSignInButtonClicked()
     {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Updates database with user information upon a successful sign in
+     * @param completedTask completed google sign in task
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);

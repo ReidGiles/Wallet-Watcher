@@ -10,125 +10,139 @@
     <LinearLayout
         android:id="@+id/linearLayoutToolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="33dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/TransactionNameText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transaction Name"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/TransactionNameInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="'Pringles'"
-                    android:inputType="textPersonName"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/TransactionCategoryText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transaction Category"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/TransactionCategoryInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="'Food'"
-                    android:inputType="textPersonName"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/TransactionCostText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transaction Cost"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/TransactionCostInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="'£1.50'"
-                    android:inputType="textPersonName"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/TransactionDescriptionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transaction Description"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/TransactionDescriptionInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="'Open Pringles, I'l have a munch. Change your locks thrice a month."
-                    android:inputType="textMultiLine"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/transactionDescriptionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Transaction Receipt"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white" />
-
-                <ImageButton
-                    android:id="@+id/btnCamera"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="obBtnCameraClicked"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
-
-                <ImageView
-                    android:id="@+id/imgCamera"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/btnSubmit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:onClick="onBtnSubmitClicked"
-                    android:text="Submit" />
-
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="539dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutToolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TransactionNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TransactionNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="'Pringles'"
+                android:inputType="textPersonName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/TransactionCategoryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Category"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TransactionCategoryInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="'Food'"
+                android:inputType="textPersonName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/TransactionCostText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Cost"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TransactionCostInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="'£1.50'"
+                android:inputType="textPersonName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/TransactionDescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/TransactionDescriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="'Open Pringles, I'l have a munch. Change your locks thrice a month."
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/transactionDescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transaction Receipt"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/btnCamera"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:onClick="obBtnCameraClicked"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <ImageView
+                android:id="@+id/imgCamera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:onClick="onBtnSubmitClicked"
+                android:text="Submit" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

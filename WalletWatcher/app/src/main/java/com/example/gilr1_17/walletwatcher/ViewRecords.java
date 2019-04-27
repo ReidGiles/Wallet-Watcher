@@ -38,8 +38,13 @@ import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ViewRecords extends AppCompatActivity {
 
@@ -90,20 +95,30 @@ public class ViewRecords extends AppCompatActivity {
     {
         @Override
         public void onClick(View view) {
-            for (CardView cardView : activeCards)
+            account = GoogleSignIn.getLastSignedInAccount(ViewRecords.this);
+            if (account != null)
             {
-                if (cardView.getId() == view.getId())
+                for (CardView cardView : activeCards)
                 {
-                    cardView.setBackgroundColor(Color.RED);
-                    for (QueryDocumentSnapshot d : activeDocuments)
+                    if (cardView.getId() == view.getId())
                     {
-                        if (d.getId() == cardView.getContentDescription())
+                        cardView.setBackgroundColor(Color.RED);
+                        for (QueryDocumentSnapshot d : activeDocuments)
                         {
-                            deleteRecord("records", d.getId());
+                            if (d.getId() == cardView.getContentDescription())
+                            {
+                                deleteRecord("records", d.getId());
+                            }
                         }
+                        updateUI();
                     }
-                    updateUI();
                 }
+            }
+            else
+            {
+                //Delete local file
+                ViewRecords.this.
+                updateUI();
             }
         }
     };
@@ -147,10 +162,11 @@ public class ViewRecords extends AppCompatActivity {
 
         if (account != null)
         {
-            populate();
+            populateOnline();
         }
         else
         {
+            populateOffline();
         }
     }
 
@@ -172,7 +188,10 @@ public class ViewRecords extends AppCompatActivity {
                 });
     }
 
-    private void populate()
+    /**
+     * Populates the layout with user records
+     */
+    private void populateOnline()
     {
         db.collection("records")
                 .whereEqualTo("ownerID", account.getId())
@@ -264,6 +283,91 @@ public class ViewRecords extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void populateOffline()
+    {
+        relativeLayout.removeAllViews();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        int cardMargin = 0;
+
+        File[] file = ViewRecords.this.getFilesDir().listFiles();
+        for (File f : file)
+        {
+            final String fileName = f.getName();
+            try
+            {
+                // https://stackoverflow.com/questions/17728449/how-can-i-store-a-data-structure-such-as-a-hashmap-internally-in-android
+                FileInputStream fileInputStream = new FileInputStream(ViewRecords.this.getFilesDir() + "/" + f.getName());
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                Map<String, Object> records = (Map<String, Object>)objectInputStream.readObject();
+
+                CardView cardView = new CardView(ViewRecords.this);
+                cardView.setLayoutParams(new CardView.LayoutParams(
+                        CardView.LayoutParams.MATCH_PARENT,
+                        400));
+
+                // https://stackoverflow.com/questions/44223471/setting-margin-programmatically-to-cardview
+                ViewGroup.MarginLayoutParams cardViewParams = (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
+                cardViewParams.setMargins(30, cardMargin, 30, 30);
+
+                relativeLayout.addView(cardView);
+                cardMargin += 450;
+
+                // https://stackoverflow.com/questions/29115392/how-to-get-the-values-from-the-hashmap-without-using-iterator
+                for (Map.Entry<String, Object> entry : records.entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+
+                    if (key.equals("name"))
+                    {
+                        TextView name = new TextView(ViewRecords.this);
+                        name.setText("Name: " + value.toString());
+                        cardView.addView(name);
+                    }
+                    if (key.equals("category"))
+                    {
+                        TextView category = new TextView(ViewRecords.this);
+                        category.setText("Category: " + value.toString());
+                        params.setMargins(0,50,0,0);
+                        category.setLayoutParams(params);
+                        cardView.addView(category);
+                    }
+                    if (key.equals("cost"))
+                    {
+                        TextView cost = new TextView(ViewRecords.this);
+                        cost.setText("Cost: " + value.toString());
+                        params.setMargins(0,100,0,0);
+                        cost.setLayoutParams(params);
+                        cardView.addView(cost);
+                    }
+                    if (key.equals("description"))
+                    {
+                        TextView description = new TextView(ViewRecords.this);
+                        description.setText("Description: " + value.toString());
+                        params.setMargins(0,150,0,0);
+                        description.setLayoutParams(params);
+                        cardView.addView(description);
+                    }
+
+                    ImageButton delete = new ImageButton(ViewRecords.this);
+                    delete.setImageResource(R.drawable.baseline_delete_forever_black_18dp);
+                    params.setMargins(850,0,0,0);
+                    delete.setLayoutParams(params);
+                    delete.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            ViewRecords.this.deleteFile(fileName);
+                            updateUI();
+                        }
+                    });
+                    cardView.addView(delete);
+                }
+
+            }
+            catch(ClassNotFoundException | IOException | ClassCastException e) {
+                Log.d("populateOffline", "populateOffline failed");
+            }
+        }
     }
 
     private void displayImage(final CardView cardView, QueryDocumentSnapshot document)
