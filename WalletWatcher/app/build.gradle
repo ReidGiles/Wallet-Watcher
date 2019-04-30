@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -38,5 +39,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.android.support:multidex:1.0.3'
     com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
 }

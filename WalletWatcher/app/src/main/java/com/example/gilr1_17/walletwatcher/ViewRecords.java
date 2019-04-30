@@ -189,6 +189,7 @@ public class ViewRecords extends AppCompatActivity {
     }
 
     /**
+     * Method: Populate()
      * Populates the layout with user records
      */
     private void populateOnline()
@@ -370,29 +371,41 @@ public class ViewRecords extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method: Locates an image associated with the passed document and places it onto the passed card.
+     * @param cardView cardview the image should be added to
+     * @param document database record containing image reference
+     */
     private void displayImage(final CardView cardView, QueryDocumentSnapshot document)
     {
+        // Get image reference from database record (document)
         StorageReference receiptRef = storage.getReferenceFromUrl(document.getString("receipt"));
 
+        // Define size of image received
         final long ONE_MEGABYTE = 1024 * 1024;
+        // Returns data for image as bytes
         receiptRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                // Data for "images/island.jpg" is returns, use this as needed
                 Log.d(TAG, "Image success");
+                // Create a new image view
                 imageView = new ImageView(ViewRecords.this);
                 //https://stackoverflow.com/questions/3545493/display-byte-to-imageview-in-android#
                 //---------------------------------------------------------------------------------
+                // Create a bitmap using the image data received
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                // Add bitmap to array for later use
                 activeImages.add(bitmap);
+                // Apply the bitmap to the image view
                 imageView.setImageBitmap(bitmap);
                 //---------------------------------------------------------------------------------
+                // Add the image view to the card
                 cardView.addView(imageView);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                // Log an error
                 Log.d(TAG, "Image failure");
             }
         });

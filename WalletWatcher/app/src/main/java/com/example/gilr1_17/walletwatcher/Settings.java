@@ -19,6 +19,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -147,13 +149,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Create a new user with a first, middle, and last name
             Map<String, Object> user = new HashMap<>();
             user.put("first", account.getGivenName());
             user.put("last", account.getFamilyName());
             user.put("email", account.getEmail());
+            user.put("ownerID", account.getId());
 
             db.collection("users").document(account.getId()).set(user);
 
