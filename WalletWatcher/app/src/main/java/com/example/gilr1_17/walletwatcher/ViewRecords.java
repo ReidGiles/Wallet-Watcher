@@ -11,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -151,6 +152,30 @@ public class ViewRecords extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Defines options menu selection response
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // Open settings activity
+                startActivity(new Intent(ViewRecords.this, Settings.class));
+
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Control back navigation result
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         startActivity(new Intent(ViewRecords.this, MainActivity.class));

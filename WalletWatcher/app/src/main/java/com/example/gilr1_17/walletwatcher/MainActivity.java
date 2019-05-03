@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    /**
+     * Defines options menu selection response
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -105,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else
         {
             //startActivity(new Intent(MainActivity.this, LogIn.class));
-            Toast toast=Toast.makeText(getApplicationContext(),"Viewing records unavailable offline",Toast.LENGTH_LONG);
-            toast.show();
             title.setText("Offline mode");
             name.setText("");
             String photo = "sample/avatars[11]";
